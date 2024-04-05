@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root 'fish#home'
   get '/fish/about'
   get "/fish/index/:id", to: "fish#show"
+  get "/water/index/:id", to: "water#show"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

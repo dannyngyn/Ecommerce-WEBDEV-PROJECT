@@ -5,5 +5,6 @@ class WaterController < ApplicationController
 
   def show
     @water = Water.find(params[:id])
+    @fish = Fish.all
   end
 end

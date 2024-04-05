@@ -1,2 +1,36 @@
-<h1>Water#show</h1>
-<p>Find me in app/views/water/show.html.erb</p>
+<h1>Winnipeg Fish & Fins - <%= @water['water_type'] %></h1>
+<ul id ="menu">
+  <li><a href = "/">Home</a></li>
+  <li><a href = "/fish/about">About</a></li>
+  <li><a href = "/fish/index">Fish</a></li>
+  <li><a href = "/water/index">Water</a></li>
+  <li><a href = "/admin/login">Admin Access</a></li>
+</ul>
+
+<section id ="fish_info">
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Fish Name</th>
+        <th>Stock</th>
+        <th>Water Type</th>
+        <th></th>
+      </tr>
+    </thead>
+      <tbody>
+        <% @water.fishs.each do |f| %>
+          <tr>
+            <td><%= f['id'] %></td>
+            <td><%= f['fish_name'] %></td>
+            <td><%= f['stock'] %></td>
+            <td><%= f.water['water_type'] %></td>
+            <td><a href = "/fish/index/<%=f.id%>">View More Info.</a></td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+</section>
+
+
+
