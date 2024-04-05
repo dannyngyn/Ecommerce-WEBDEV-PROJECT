@@ -1,0 +1,35 @@
+<h1>Winnipeg Fish & Fins - Fish</h1>
+<ul id ="menu">
+  <li><a href = "/">Home</a></li>
+  <li><a href = "/fish/about">About</a></li>
+  <li><a href = "/fish/index">Fish</a></li>
+  <li><a href = "/admin/login">Admin Access</a></li>
+</ul>
+
+
+<%= paginate @water %>
+<% @water.each do |water_type| %>
+<h2><%= water_type['water_type'] %></h2>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Fish Name</th>
+      <th>Stock</th>
+      <th>Water Type</th>
+      <th></th>
+    </tr>
+  </thead>
+    <tbody>
+      <% water_type.fishs.each do |f| %>
+        <tr>
+          <td><%= f['id'] %></td>
+          <td><%= f['fish_name'] %></td>
+          <td><%= f['stock'] %></td>
+          <td><%= f.water['water_type'] %></td>
+          <td><a href = "/fish/index/<%=f.id%>">View More Info.</a></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+<% end %>

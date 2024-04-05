@@ -1,6 +1,15 @@
 source "https://rubygems.org"
 
 ruby "3.1.2"
+gem "activeadmin"
+gem "faker"
+gem 'devise'
+gem 'kaminari'
+
+gem 'bcrypt', platforms: :ruby
+# to resolve the cannot load such file -- sassc
+gem "sassc-rails"
+# to resolve the cannot load such file -- sassc
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3"

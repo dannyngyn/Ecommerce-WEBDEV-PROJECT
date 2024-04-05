@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fish_name: MyString
+  stock: 1
+  size: MyString
+  fish_cost: 1.5
+  water: one
+  fish_order: one
+
+two:
+  fish_name: MyString
+  stock: 1
+  size: MyString
+  fish_cost: 1.5
+  water: two
+  fish_order: two

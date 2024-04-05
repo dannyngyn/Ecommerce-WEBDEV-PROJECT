@@ -1,0 +1,20 @@
+<h1>Winnipeg Fish & Fins - Fish#<%= @fish.id %></h1>
+<ul id ="menu">
+  <li><a href = "/">Home</a></li>
+  <li><a href = "/fish/about">About</a></li>
+  <li><a href = "/fish/index">Fish</a></li>
+  <li><a href = "/admin/login">Admin Access</a></li>
+</ul>
+
+<section id ="fish_section">
+  <h2 id = "underline_fish_name"><%= @fish['fish_name'] %></h2>
+  <section id ="fish_info">
+    <p>Size: <%= @fish['size'] %></p>
+    <p>Stock: <%= @fish['stock'] %></p>
+    <p>Cost: $<%= @fish['fish_cost'] %></p>
+    <p>Water Type: <%= @fish.water['water_type'] %></p>
+    <p><a href = "/fish/index">Go Back to Fish</a></p>
+  </section>
+</section>
+
+
