@@ -5,7 +5,9 @@ ActiveAdmin.register Fish do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
+
   permit_params :fish_name, :stock, :size, :fish_cost, :water_id
+
   #
   # or
   #

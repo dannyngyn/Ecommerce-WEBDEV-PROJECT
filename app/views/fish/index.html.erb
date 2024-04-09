@@ -7,25 +7,49 @@
   <li><a href = "/admin/login">Admin Access</a></li>
 </ul>
 
+<div id ="search_form">
+  <%= form_for "", url: "/fish/index", method: :get do |form| %>
+    <%= form.label :search, "Search by Fish Name:" %>
+    <%= form.text_field :search %>
+    <%= form.select :search_id, @water.map { |w| [w.water_type, w.id]} + [["ALL", 4]]%>
+    <%= form.submit "Search" %>
+  <% end %>
+</div>
 
-<%= paginate @water %>
-<% @water.each do |water_type| %>
-<h2><%= water_type['water_type'] %></h2>
+<%= paginate @fish %>
+<% if params[:search_id] || params[:search]%>
+  <% if params[:search_id] && params[:search] == "" %>
+    <% if params[:search_id] == "4" %>
+      <h2>search results for all water types</h2>
+    <% else %>
+      <h2>search results for fish in: "<%=@fish.first.water['water_type']%>"</h2>
+    <% end %>
+  <% else %>
+    <% if params[:search_id] == "4" %>
+      <h2>search results for "<%=params[:search]%>" in all water types</h2>
+    <% else %>
+      <h2>search results for "<%=params[:search]%>" in: "<%=@fish.first.water['water_type']%>"</h2>
+    <% end %>
+  <% end %>
+<%end%>
+
 <table>
   <thead>
     <tr>
       <th>Id</th>
       <th>Fish Name</th>
+      <th>Size</th>
       <th>Stock</th>
       <th>Water Type</th>
       <th></th>
     </tr>
   </thead>
     <tbody>
-      <% water_type.fishs.each do |f| %>
+      <% @fish.each do |f| %>
         <tr>
           <td><%= f['id'] %></td>
           <td><%= f['fish_name'] %></td>
+          <td><%= f['size'] %></td>
           <td><%= f['stock'] %></td>
           <td><%= f.water['water_type'] %></td>
           <td><a href = "/fish/index/<%=f.id%>">View More Info.</a></td>
@@ -33,4 +57,3 @@
       <% end %>
   </tbody>
 </table>
-<% end %>
