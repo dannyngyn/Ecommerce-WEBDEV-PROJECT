@@ -8,9 +8,12 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 require 'csv'
+require 'nokogiri'
+require 'open-uri'
 
-Water.destroy_all
+Province.destroy_all
 Fish.destroy_all
+Water.destroy_all
 AdminUser.destroy_all
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
@@ -33,5 +36,4 @@ fishy_CSV.each do |f|
 end
 
 fish_count = Fish.count
-
 puts "Created #{fish_count} Fish Records w/ CSV"

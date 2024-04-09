@@ -5,6 +5,7 @@ gem "activeadmin"
 gem "faker"
 gem 'devise'
 gem 'kaminari'
+gem 'nokogiri'
 
 gem 'bcrypt', platforms: :ruby
 # to resolve the cannot load such file -- sassc

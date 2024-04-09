@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_05_050756) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_09_231352) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -46,6 +46,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_050756) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["water_id"], name: "index_fish_on_water_id"
+  end
+
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.float "gst"
+    t.float "pst"
+    t.float "hst"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "total_tax"
   end
 
   create_table "waters", force: :cascade do |t|
