@@ -24,12 +24,18 @@ fish_count = 0
 
 fishy_CSV.each do |f|
   water_type = Water.find_or_create_by(water_type: f["water_type"])
+  raised_type = RaisedType.find_or_create_by(raised_type: f["raised_type"])
   if(water_type && water_type.valid?)
-    fish = water_type.fishs.create(fish_name: f["fish_name"],
-                                  stock: f["stock"],
-                                  size: f["size"],
-                                  fish_cost: f["fish_cost"]
-    )
+    if(raised_type && raised_type.valid?)
+      fish = water_type.fishs.create(raised_type_id: raised_type.id,
+                                    fish_name: f["fish_name"],
+                                    stock: f["stock"],
+                                    size: f["size"],
+                                    fish_cost: f["fish_cost"]
+      )
+    else
+      puts "Raised Type is invalid"
+    end
   else
     puts "Water Type is invalid"
   end
