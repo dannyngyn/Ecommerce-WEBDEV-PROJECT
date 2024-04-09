@@ -6,6 +6,7 @@ class CreateFish < ActiveRecord::Migration[7.1]
       t.string :size
       t.float :fish_cost
       t.references :water, null: false, foreign_key: true
+      t.references :raised_type, null: false, foreign_key: true
 
       t.timestamps
     end

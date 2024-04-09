@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_09_231352) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_09_232942) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -43,8 +43,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_09_231352) do
     t.string "size"
     t.float "fish_cost"
     t.integer "water_id", null: false
+    t.integer "raised_type_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["raised_type_id"], name: "index_fish_on_raised_type_id"
     t.index ["water_id"], name: "index_fish_on_water_id"
   end
 
@@ -58,11 +60,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_09_231352) do
     t.float "total_tax"
   end
 
+  create_table "raised_types", force: :cascade do |t|
+    t.string "raised_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "waters", force: :cascade do |t|
     t.string "water_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "fish", "raised_types"
   add_foreign_key "fish", "waters"
 end

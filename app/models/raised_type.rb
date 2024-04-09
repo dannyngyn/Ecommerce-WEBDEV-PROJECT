@@ -1,0 +1,2 @@
+class RaisedType < ApplicationRecord
+end
