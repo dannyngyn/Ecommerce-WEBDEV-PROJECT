@@ -37,3 +37,22 @@ end
 
 fish_count = Fish.count
 puts "Created #{fish_count} Fish Records w/ CSV"
+
+doc = Nokogiri::HTML(URI.open('https://www.retailcouncil.org/resources/quick-facts/sales-tax-rates-by-province/'))
+doc.css('table.table tbody tr').each do |row|
+  province_name = row.at_css('td:nth-child(1)').text.strip
+  pst = row.at_css('td:nth-child(3)').text.gsub("%", "").to_f
+  gst = row.at_css('td:nth-child(4)').text.gsub("%", "").to_f
+  hst = row.at_css('td:nth-child(5)').text.gsub("%", "").to_f
+  total_tax = pst + gst + hst
+
+  province = Province.find_or_create_by(name: province_name,
+                                         gst: gst,
+                                         pst: pst,
+                                         hst: hst,
+                                         total_tax: total_tax
+  )
+end
+
+province_count = Province.count
+puts "Created #{province_count} Province Records w/ Nokogiri Web Scraping"
