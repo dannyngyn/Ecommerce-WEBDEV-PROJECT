@@ -15,6 +15,17 @@
     <p>Cost: $<%= @fish['fish_cost'] %></p>
     <p>Water Type: <%= @fish.water['water_type'] %></p>
     <p><a href = "/fish/index">Go Back to Fish</a></p>
+    <%= form_with url: cart_index_path, method: :post do %>
+      <%= hidden_field_tag(:id, @fish.id) %>
+      <%= label_tag(:quantity, "Quantity:") %>
+      <%= select_tag(:quantity, options_for_select(1...@fish['stock'] + 1)) %>
+      <%= button_tag "Add to cart" %>
+    <% end %>
+    <%if @fish.image.present? %>
+      <div id = "fish_image">
+        <%= image_tag @fish.image %>
+      </div>
+    <% end %>
   </section>
 </section>
 

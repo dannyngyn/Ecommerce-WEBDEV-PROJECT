@@ -8,3 +8,8 @@
 </ul>
 
 <h2>Welcome to the Winnipeg Fish & Fins</h2>
+<% if flash[:notice] %>
+  <p>
+    <%= flash[:notice]%>
+  </p>
+<% end %>

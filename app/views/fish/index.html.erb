@@ -17,7 +17,7 @@
 </div>
 
 <%= paginate @fish %>
-<% if params[:search_id] || params[:search]%>
+<% if params[:search_id] || params[:search] %>
   <% if params[:search_id] && params[:search] == "" %>
     <% if params[:search_id] == "4" %>
       <h2>search results for all water types</h2>
@@ -27,7 +27,7 @@
   <% else %>
     <% if params[:search_id] == "4" %>
       <h2>search results for "<%=params[:search]%>" in all water types</h2>
-    <% else %>
+    <% elsif @fish.present? %>
       <h2>search results for "<%=params[:search]%>" in: "<%=@fish.first.water['water_type']%>"</h2>
     <% end %>
   <% end %>

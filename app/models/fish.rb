@@ -1,5 +1,7 @@
 class Fish < ApplicationRecord
   belongs_to :water
+  belongs_to :raised_type
+  has_one_attached :image
 
   def self.search_by(search,search_id)
     if (search == "" && search_id)
@@ -16,10 +18,10 @@ class Fish < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["water"]
+    ["raised_type", "water"]
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "fish_cost", "fish_name", "id", "id_value", "size", "stock", "updated_at", "water_id"]
+    ["created_at", "fish_cost", "fish_name", "id", "id_value", "size", "stock", "updated_at", "water_id", "raised_type_id"]
   end
 end

@@ -14,6 +14,7 @@ require 'open-uri'
 Province.destroy_all
 Fish.destroy_all
 Water.destroy_all
+RaisedType.destroy_all
 AdminUser.destroy_all
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
@@ -27,7 +28,7 @@ fishy_CSV.each do |f|
   raised_type = RaisedType.find_or_create_by(raised_type: f["raised_type"])
   if(water_type && water_type.valid?)
     if(raised_type && raised_type.valid?)
-      fish = water_type.fishs.create(raised_type_id: raised_type.id,
+      fish = water_type.fishs.create(raised_type: raised_type,
                                     fish_name: f["fish_name"],
                                     stock: f["stock"],
                                     size: f["size"],

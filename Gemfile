@@ -7,6 +7,8 @@ gem 'devise'
 gem 'kaminari'
 gem 'nokogiri'
 
+gem 'image_processing', '~> 1.2'
+
 gem 'bcrypt', platforms: :ruby
 # to resolve the cannot load such file -- sassc
 gem "sassc-rails"
