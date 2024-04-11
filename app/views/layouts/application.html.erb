@@ -8,9 +8,34 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script src = "https://js.strip.com/v3">
   </head>
 
+  <details>
+    <summary>
+      <%= image_tag("clown-fish.png", width:50) %>
+      <% if cart.present? %>
+        <sup><%= cart.size %></sup>
+      <% end %>
+    </summary>
+    <ul>
+    <% if cart.present? %>
+      <% cart.each do |fish| %>
+        <li>
+          <%= fish.fish_name %><%= button_to 'X', cart_path(fish), method: :delete %>
+        </li>
+      <% end %>
+    </ul>
+    <% else %>
+      <p>
+        No items in your cart.
+      </p>
+    <% end %>
+  </details>
   <body>
     <%= yield %>
   </body>
+  <footer>
+    <a href="https://www.flaticon.com/free-icons/dolly-fish" title="dolly fish icons">Dolly fish icons created by Freepik - Flaticon</a>
+  </footer>
 </html>

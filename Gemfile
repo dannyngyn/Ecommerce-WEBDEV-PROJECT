@@ -6,6 +6,7 @@ gem "faker"
 gem 'devise'
 gem 'kaminari'
 gem 'nokogiri'
+gem 'stripe'
 
 gem 'image_processing', '~> 1.2'
 
