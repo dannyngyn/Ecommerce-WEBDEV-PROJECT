@@ -1,0 +1,24 @@
+<% if cart.present? %>
+  <% cart.each do |fish| %>
+    <section id = "fish_section">
+      <p><%= fish.fish_name %></p>
+      <p>Size: <%= fish.size %></p>
+      <%if fish.image.present? %>
+        <div id = "fish_image">
+          <%= image_tag(fish.image, width:100) %>
+        </div>
+      <% end %>
+      <%= select_tag(:quantity, options_for_select(1...(fish.stock + 1))) %>
+      <%= button_to 'REMOVE', cart_path(fish), method: :delete %>
+    </section>
+  <% end %>
+<% else %>
+  <p>
+    No items in your cart.
+  </p>
+<% end %>
+<% if flash[:notice] %>
+  <p>
+    <%= flash[:notice]%>
+  </p>
+<% end %>

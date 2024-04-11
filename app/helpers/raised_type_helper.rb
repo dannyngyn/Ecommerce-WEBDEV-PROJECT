@@ -1,0 +1,2 @@
+module RaisedTypeHelper
+end

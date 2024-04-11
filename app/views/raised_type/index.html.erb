@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Raised Type</th>
+      <th></th>
+    </tr>
+  </thead>
+    <tbody>
+      <% @raised_type.each do |r| %>
+        <tr>
+          <td><%= r['id'] %></td>
+          <td><%= r['raised_type'] %></td>
+          <td><a href = "/raised_type/index/<%=r.id%>">View All Fish</a></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>

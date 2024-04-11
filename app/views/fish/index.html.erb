@@ -1,12 +1,3 @@
-<h1>Winnipeg Fish & Fins - Fish</h1>
-<ul id ="menu">
-  <li><a href = "/">Home</a></li>
-  <li><a href = "/fish/about">About</a></li>
-  <li><a href = "/fish/index">Fish</a></li>
-  <li><a href = "/water/index">Water</a></li>
-  <li><a href = "/admin/login">Admin Access</a></li>
-</ul>
-
 <div id ="search_form">
   <%= form_for "", url: "/fish/index", method: :get do |form| %>
     <%= form.label :search, "Search by Fish Name:" %>
@@ -41,6 +32,7 @@
       <th>Size</th>
       <th>Stock</th>
       <th>Water Type</th>
+      <th>Raised Type</th>
       <th></th>
     </tr>
   </thead>
@@ -52,6 +44,7 @@
           <td><%= f['size'] %></td>
           <td><%= f['stock'] %></td>
           <td><%= f.water['water_type'] %></td>
+          <td><%= f.raised_type['raised_type'] %></td>
           <td><a href = "/fish/index/<%=f.id%>">View More Info.</a></td>
         </tr>
       <% end %>

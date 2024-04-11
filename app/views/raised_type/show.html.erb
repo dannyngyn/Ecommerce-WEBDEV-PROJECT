@@ -1,18 +1,18 @@
 <section id ="fish_info">
-  <h1><%=@water['water_type']%></h1>
+  <h1><%=@raised_type['raised_type']%></h1>
   <table>
     <thead>
       <tr>
         <th>Id</th>
         <th>Fish Name</th>
         <th>Stock</th>
-        <th>Water Type</th>
         <th>Raised Type</th>
+        <th>Water Type</th>
         <th></th>
       </tr>
     </thead>
       <tbody>
-        <% @water.fishs.each do |f| %>
+        <% @raised_type.fishs.each do |f| %>
           <tr>
             <td><%= f['id'] %></td>
             <td><%= f['fish_name'] %></td>

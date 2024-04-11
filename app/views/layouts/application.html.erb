@@ -8,30 +8,46 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <script src = "https://js.strip.com/v3">
+    <script src="https://js.stripe.com/v3"></script>
   </head>
 
   <details>
     <summary>
-      <%= image_tag("clown-fish.png", width:50) %>
+      <%= link_to image_tag("clown-fish.png", width:50), cart_shop_path  %>
       <% if cart.present? %>
         <sup><%= cart.size %></sup>
       <% end %>
     </summary>
-    <ul>
-    <% if cart.present? %>
-      <% cart.each do |fish| %>
-        <li>
-          <%= fish.fish_name %><%= button_to 'X', cart_path(fish), method: :delete %>
-        </li>
+      <% if cart.present? %>
+        <% cart.each do |fish| %>
+          <li>
+            <%= fish.fish_name %><%= button_to 'X', cart_path(fish), method: :delete %>
+          </li>
+        <% end %>
+      </ul>
+      <% else %>
+        <p>
+          No items in your cart.
+        </p>
       <% end %>
-    </ul>
-    <% else %>
-      <p>
-        No items in your cart.
-      </p>
-    <% end %>
+      <% if flash[:notice] %>
+        <p>
+          <%= flash[:notice]%>
+        </p>
+      <% end %>
   </details>
+
+  <h1>Winnipeg Fish & Fins</h1>
+  <ul id ="menu">
+    <li><a href = "/">Home</a></li>
+    <li><a href = "/fish/about">About</a></li>
+    <li><a href = "/fish/index">Fish</a></li>
+    <li><a href = "/water/index">Water</a></li>
+    <li><a href = "/raised_type/index">Raised Types</a></li>
+    <li><a href = "/province/index">Provinces</a></li>
+    <li><a href = "/admin/login">Admin Access</a></li>
+  </ul>
+
   <body>
     <%= yield %>
   </body>

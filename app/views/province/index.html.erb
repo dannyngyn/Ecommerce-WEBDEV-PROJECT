@@ -1,0 +1,25 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>GST</th>
+      <th>PST</th>
+      <th>HST</th>
+      <th>Total Tax</th>
+      <th></th>
+    </tr>
+  </thead>
+    <tbody>
+      <% @provinces.each do |p| %>
+        <tr>
+          <td><%= p['id'] %></td>
+          <td><%= p['name'] %></td>
+          <td><%= p['gst'] %></td>
+          <td><%= p['pst'] %></td>
+          <td><%= p['hst'] %></td>
+          <td><%= p['total_tax'] %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
