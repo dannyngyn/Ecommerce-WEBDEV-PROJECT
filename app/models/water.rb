@@ -1,5 +1,6 @@
 class Water < ApplicationRecord
   has_many :fishs
+  validates :water_type, presence: true
 
   def self.ransackable_associations(auth_object = nil)
     ["fishs"]

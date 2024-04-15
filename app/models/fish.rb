@@ -1,7 +1,13 @@
 class Fish < ApplicationRecord
   belongs_to :water
   belongs_to :raised_type
+  validates :fish_name, presence: true
+  validates :stock, presence: true
+  validates :size, presence: true
+  validates :fish_cost, presence: true
   has_one_attached :image
+
+  validate
 
   def self.search_by(search,search_id)
     if (search == "" && search_id)

@@ -1,5 +1,6 @@
 class RaisedType < ApplicationRecord
   has_many :fishs
+  validates :raised_type, presence: true
 
   def self.ransackable_associations(auth_object = nil)
     ["fishs"]
