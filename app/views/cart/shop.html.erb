@@ -17,6 +17,17 @@
     No items in your cart.
   </p>
 <% end %>
+
+<% if cart.present? %>
+  <div id = "fish_buy_form">
+    <%= form_with url: checkout_create_path, remote: true, data: { turbo: false } do %>
+      <%= cart %>
+      <%= hidden_field_tag(:quantity)%>
+      <%= button_tag "Check Out Now"%>
+    <% end %>
+  </div>
+<% end %>
+
 <% if flash[:notice] %>
   <p>
     <%= flash[:notice]%>

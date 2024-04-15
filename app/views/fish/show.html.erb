@@ -15,13 +15,6 @@
       <% end %>
     </div>
 
-    <div id = "fish_buy_form">
-      <%= form_with url: checkout_create_path, remote: true do %>
-        <%= hidden_field_tag(:fish_id, @fish.id) %>
-        <%= button_tag "Buy Now"%>
-      <% end %>
-    </div>
-
     <%if @fish.image.present? %>
       <div id = "fish_image">
         <%= image_tag(@fish.image, width: 200) %>
