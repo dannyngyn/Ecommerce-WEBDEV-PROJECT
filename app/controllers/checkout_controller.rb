@@ -15,7 +15,7 @@ class CheckoutController < ApplicationController
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
-      success_url: checkout_success_url,
+      success_url: checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: checkout_cancel_url,
       mode: "payment",
       line_items: cart.map do |fish|
@@ -76,6 +76,25 @@ class CheckoutController < ApplicationController
   def success
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
+    @fishes = []
+
+    cart.each do |fish|
+      @fishes.append(fish.id)
+    end
+
+
+
+    #this will be temp, 61 user id is me.
+    @user = User.find(61);
+
+    @order = user.orders.create(:user_id, user,
+                                :total_cost, fishes)
+
+    cart.each do |fish|
+      @fish_order = user.fish_orders.create(:user, user_id,
+                                            :fish_id, fishes)
+    end
+
   end
 
   def cancel
