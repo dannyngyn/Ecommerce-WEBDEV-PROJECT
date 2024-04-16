@@ -1,6 +1,8 @@
 class Fish < ApplicationRecord
   belongs_to :water
   belongs_to :raised_type
+
+  has_many :fish_orders
   validates :fish_name, presence: true
   validates :stock, presence: true
   validates :size, presence: true
