@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
-  get 'raised_type/index'
-  get 'water/index'
-  get 'water/show'
+  get 'checkout/show'
   get 'fish/index'
   get 'cart/shop'
-  get 'raised_type/index'
-  get 'province/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

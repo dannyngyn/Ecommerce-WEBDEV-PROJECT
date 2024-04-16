@@ -10,7 +10,9 @@
 require 'csv'
 require 'nokogiri'
 require 'open-uri'
+require 'faker'
 
+User.destroy_all
 Province.destroy_all
 Fish.destroy_all
 Water.destroy_all
@@ -63,3 +65,17 @@ end
 
 province_count = Province.count
 puts "Created #{province_count} Province Records w/ Nokogiri Web Scraping"
+
+10.times do
+  random_province = Province.order("RANDOM()").take
+  if(random_province && random_province.valid?)
+    user = random_province.users.create(province_id: random_province,
+                                        first_name: Faker::Name.first_name,
+                                        last_name: Faker::Name.last_name,
+                                        address: Faker::Address.street_address
+    )
+  end
+end
+
+user_count = User.count
+puts "Created #{user_count} User Records w/ Faker"

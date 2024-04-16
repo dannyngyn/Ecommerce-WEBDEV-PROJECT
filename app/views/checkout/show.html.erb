@@ -1,0 +1,27 @@
+<% if cart.present? %>
+  <div id = "fish_buy_form">
+    <%= form_with url: checkout_create_path, remote: true, data: { turbo: false } do |form|%>
+      <div>
+        <%= form.label :first_name, "First Name: "%>
+        <%= form.text_field :first_name %>
+      </div>
+      <div>
+      <%= form.label :last_name, "Last Name: "%>
+      <%= form.text_field :last_name %>
+      </div>
+      <div>
+      <%= form.label :address, "Address: "%>
+      <%= form.text_field :address %>
+      </div>
+      <div>
+      <%= form.label :province, "Province: "%>
+      <%= form.text_field :province %>
+      </div>
+      <%= button_tag "Check Out Now"%>
+    <% end %>
+  </div>
+<% else %>
+  <p>
+    No items in your cart to order.
+  </p>
+<% end %>

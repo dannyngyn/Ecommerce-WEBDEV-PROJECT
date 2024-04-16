@@ -8,7 +8,6 @@
           <%= image_tag(fish.image, width:100) %>
         </div>
       <% end %>
-      <%= select_tag(:quantity, options_for_select(1...(fish.stock + 1))) %>
       <%= button_to 'REMOVE', cart_path(fish), method: :delete %>
     </section>
   <% end %>
@@ -19,13 +18,8 @@
 <% end %>
 
 <% if cart.present? %>
-  <div id = "fish_buy_form">
-    <%= form_with url: checkout_create_path, remote: true, data: { turbo: false } do %>
-      <%= cart %>
-      <%= hidden_field_tag(:quantity)%>
-      <%= button_tag "Check Out Now"%>
-    <% end %>
-  </div>
+
+  <%= button_to 'Proceed to Check Out', '/checkout/show', method: :get %>
 <% end %>
 
 <% if flash[:notice] %>

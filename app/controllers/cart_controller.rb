@@ -1,6 +1,6 @@
 class CartController < ApplicationController
   def create
-    logger.debug("adding fish_id #{params[:id]} with quantity of #{params[:quantity]} to cart.")
+    logger.debug("adding fish_id #{params[:id]}")
     id = params[:id].to_i
 
     session[:shopping_cart] << id unless session[:shopping_cart].include?(id)

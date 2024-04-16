@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_10_011022) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_16_003446) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -94,6 +94,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_10_011022) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "province_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "address"
+    t.index ["province_id"], name: "index_users_on_province_id"
+  end
+
   create_table "waters", force: :cascade do |t|
     t.string "water_type"
     t.datetime "created_at", null: false
@@ -104,4 +114,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_10_011022) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "fish", "raised_types"
   add_foreign_key "fish", "waters"
+  add_foreign_key "users", "provinces"
 end
