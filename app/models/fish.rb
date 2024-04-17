@@ -4,9 +4,9 @@ class Fish < ApplicationRecord
 
   has_many :fish_orders
   validates :fish_name, presence: true
-  validates :stock, presence: true
+  validates :stock, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :size, presence: true
-  validates :fish_cost, presence: true
+  validates :fish_cost, presence: true, numericality: {greater_than_or_equal_to: 0}
   has_one_attached :image
 
   validate
