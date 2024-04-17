@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_16_063207) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_16_212648) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -80,11 +80,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_063207) do
 
   create_table "fish_orders", force: :cascade do |t|
     t.integer "fish_id", null: false
-    t.integer "orders_id", null: false
+    t.integer "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fish_id"], name: "index_fish_orders_on_fish_id"
-    t.index ["orders_id"], name: "index_fish_orders_on_orders_id"
+    t.index ["order_id"], name: "index_fish_orders_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_063207) do
   add_foreign_key "fish", "raised_types"
   add_foreign_key "fish", "waters"
   add_foreign_key "fish_orders", "fish"
-  add_foreign_key "fish_orders", "orders", column: "orders_id"
+  add_foreign_key "fish_orders", "orders"
   add_foreign_key "orders", "users"
   add_foreign_key "users", "provinces"
 end

@@ -2,8 +2,8 @@
 
 one:
   fish: one
-  orders: one
+  order: one
 
 two:
   fish: two
-  orders: two
+  order: two

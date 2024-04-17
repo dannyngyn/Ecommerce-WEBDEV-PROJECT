@@ -1,4 +1,4 @@
 class FishOrder < ApplicationRecord
   belongs_to :fish
-  belongs_to :orders
+  belongs_to :order
 end

@@ -76,25 +76,27 @@ class CheckoutController < ApplicationController
   def success
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
-    @fishes = []
-
-    cart.each do |fish|
-      @fishes.append(fish.id)
-    end
-
-
 
     #this will be temp, 61 user id is me.
-    @user = User.find(61);
+    user = User.find(61);
+    total_cost = sprintf("%.2f", @session["amount_total"] / 100.0)
 
-    @order = user.orders.create(:user_id, user,
-                                :total_cost, fishes)
-
-    cart.each do |fish|
-      @fish_order = user.fish_orders.create(:user, user_id,
-                                            :fish_id, fishes)
+    if(user && user.valid?)
+      order = user.orders.create(user_id: user,
+                                 total_cost: total_cost,
+                                 billing_name: @session["customer_details"]["name"])
+      if(order && order.valid?)
+        cart.each do |fish|
+          @fish = Fish.find(fish.id)
+          fish_order = order.fish_orders.create(fish: @fish)
+        end
+        session[:shopping_cart] = []
+      else
+        puts "Order Error"
+      end
+    else
+      puts "User Error"
     end
-
   end
 
   def cancel
