@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  get 'user/login'
+  devise_for :user_login, controllers: {
+    sessions: 'user_login/sessions'
+  }
   get 'checkout/show'
   get 'fish/index'
   get 'cart/shop'
-  get 'user/login'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
