@@ -12,13 +12,15 @@ require 'nokogiri'
 require 'open-uri'
 require 'faker'
 
-#User.destroy_all
-#Province.destroy_all
-#Fish.destroy_all
-#Water.destroy_all
-#RaisedType.destroy_all
-#AdminUser.destroy_all
-#AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+User.destroy_all
+Province.destroy_all
+FishOrder.destroy_all
+Fish.destroy_all
+Water.destroy_all
+RaisedType.destroy_all
+AdminUser.destroy_all
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 csv_file = Rails.root.join('db/project_fish_data.csv')
 csv_data = File.read(csv_file)

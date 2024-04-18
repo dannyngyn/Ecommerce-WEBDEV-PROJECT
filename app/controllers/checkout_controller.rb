@@ -5,13 +5,59 @@ class CheckoutController < ApplicationController
       return
     end
 
-    if Province.find_by(name: params[:province]).nil?
+    if (Province.find_by(name: params[:province]).nil? && !user_login_signed_in?)
+      flash[:province_notice] =  "#{params[:province]} does not exist"
+    end
+
+    if (UserLogin.find_by(email: params[:email]) && !user_login_signed_in?)
+      flash[:email_notice] = "Please login with the registered email, #{params[:email]}"
+    end
+
+    if(flash[:email_notice] || flash[:province_notice])
       redirect_to checkout_show_path
       return
     end
 
-    @province = Province.find_by(name: params[:province])
+    if(user_login_signed_in? && current_user_login.user_id)
+      user = User.find(current_user_login.user_id)
+      province = Province.find_by(id: user.province_id)
+    end
+
+    if((user_login_signed_in? && current_user_login.user_id.nil?) || !user_login_signed_in?)
+      province = Province.find_by(name: params[:province])
+
+      user = province.users.find_or_create_by(first_name: params[:first_name],
+                                              last_name: params[:last_name],
+                                              address: params[:address],
+                                              email: params[:email],
+                                              province_id: province.id)
+    end
+
+    if(user_login_signed_in? && current_user_login.user_id.nil?)
+      current_user.update(user_id: user.id)
+    end
+
     total_fish_cost = cart.sum { |fish| fish.fish_cost }
+
+    if(province.pst)
+      pst_calculation = total_fish_cost * province.pst
+    else
+      pst_calculation = 0
+    end
+
+    if(province.gst)
+      gst_calculation = total_fish_cost * province.gst
+    else
+      gst_calculation = 0
+    end
+
+    if(province.hst)
+      hst_calculation = total_fish_cost * province.hst
+    else
+      hst_calculation = 0
+    end
+
+    grand_total = total_fish_cost + hst_calculation/100 + gst_calculation/100 + pst_calculation/100
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
@@ -30,10 +76,10 @@ class CheckoutController < ApplicationController
           }
         }
       end +
-      (@province.gst > 0 && @province.gst ? [
+      (province.gst > 0 && province.gst ? [
         quantity: 1,
         price_data: {
-          unit_amount: (total_fish_cost * @province.gst).to_i,
+          unit_amount: gst_calculation.to_i,
           currency: "cad",
           product_data: {
             name: "GST",
@@ -41,10 +87,10 @@ class CheckoutController < ApplicationController
           }
         }
       ] : []) +
-      (@province.pst > 0 && @province.pst ? [
+      (province.pst > 0 && province.pst ? [
         quantity: 1,
         price_data: {
-          unit_amount: (total_fish_cost * @province.pst).to_i,
+          unit_amount: pst_calculation.to_i,
           currency: "cad",
           product_data: {
             name: "PST",
@@ -52,10 +98,10 @@ class CheckoutController < ApplicationController
           }
         }
       ] : []) +
-      (@province.hst > 0 && @province.hst ? [
+      (province.hst > 0 && province.hst ? [
         quantity: 1,
         price_data: {
-          unit_amount: (total_fish_cost * @province.hst).to_i,
+          unit_amount: hst_calculation.to_i,
           currency: "cad",
           product_data: {
             name: "HST",
@@ -69,6 +115,23 @@ class CheckoutController < ApplicationController
     #   format.js
     # end
 
+    if(user && user.valid?)
+      order = user.orders.create(user_id: user.id,
+                                 total_cost: grand_total.to_i,
+                                 payment_status: ["new"])
+      if(order && order.valid?)
+        cart.each do |fish|
+          @fish = Fish.find(fish.id)
+          fish_order = order.fish_orders.create(fish: @fish)
+        end
+      else
+        puts "Order Error"
+      end
+    else
+      puts "User Error"
+    end
+
+    flash[:order] = order.id
     redirect_to @session.url, allow_other_host: true
 
   end
@@ -77,29 +140,22 @@ class CheckoutController < ApplicationController
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
 
-    #this will be temp, 61 user id is me.
-    user = User.find(61);
-    total_cost = sprintf("%.2f", @session["amount_total"] / 100.0)
-
-    if(user && user.valid?)
-      order = user.orders.create(user_id: user,
-                                 total_cost: total_cost,
-                                 billing_name: @session["customer_details"]["name"])
-      if(order && order.valid?)
-        cart.each do |fish|
-          @fish = Fish.find(fish.id)
-          fish_order = order.fish_orders.create(fish: @fish)
-        end
-        session[:shopping_cart] = []
-      else
-        puts "Order Error"
-      end
-    else
-      puts "User Error"
+    if flash[:order]
+      order = Order.find(flash[:order])
+      order.update(payment_status: @session['payment_status'])
     end
+
+    session[:shopping_cart] = []
+
   end
 
   def cancel
+    if flash[:order]
+      order = Order.find(flash[:order])
+      order.update(payment_status: 'cancelled')
+    end
 
+    session[:shopping_cart] = []
   end
+
 end
