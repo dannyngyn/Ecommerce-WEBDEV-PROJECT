@@ -7,6 +7,8 @@ gem 'devise'
 gem 'kaminari'
 gem 'nokogiri'
 gem 'stripe'
+gem 'rubocop'
+gem 'rubocop-rails'
 
 gem 'image_processing', '~> 1.2'
 

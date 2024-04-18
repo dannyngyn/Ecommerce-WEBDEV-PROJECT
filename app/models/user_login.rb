@@ -9,11 +9,12 @@ class UserLogin < ApplicationRecord
   validates :email, presence: true
   validates :encrypted_password, presence: true
 
-  def self.ransackable_associations(auth_object = nil)
+  def self.ransackable_associations(_auth_object = nil)
     ["users"]
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "email", "encrypted_password", "id", "id_value", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at", "user_id"]
+  def self.ransackable_attributes(_auth_object = nil)
+    ["created_at", "email", "encrypted_password", "id", "id_value", "remember_created_at",
+     "reset_password_sent_at", "reset_password_token", "updated_at", "user_id"]
   end
 end

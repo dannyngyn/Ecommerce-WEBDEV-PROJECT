@@ -2,34 +2,30 @@ class Fish < ApplicationRecord
   belongs_to :water
   belongs_to :raised_type
 
-  has_many :fish_orders
+  has_many :fish_orders, dependent: :destroy
   validates :fish_name, presence: true
-  validates :stock, presence: true, numericality: {greater_than_or_equal_to: 0}
+  validates :stock, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :size, presence: true
-  validates :fish_cost, presence: true, numericality: {greater_than_or_equal_to: 0}
+  validates :fish_cost, presence: true, numericality: { greater_than_or_equal_to: 0 }
   has_one_attached :image
 
   validate
 
-  def self.search_by(search,search_id)
-    if (search == "" && search_id)
-      if search_id == "4"
-        all
-      else
-        where(("water_id = :id"), id: "#{search_id}")
-      end
-    elsif search_id == "4" && search
-      where(("LOWER(fish_name) LIKE :search"), search: "%#{search.downcase}%")
+  def self.search_by(search, search_id)
+    if search_id == "4" && search
+      where("LOWER(fish_name) LIKE :search", search: "%#{search.downcase}%")
     else
-      where(("LOWER(fish_name) LIKE :search AND water_id = :id"), search: "%#{search.downcase}%", id: "#{search_id}")
+      where("LOWER(fish_name) LIKE :search AND water_id = :id", search: "%#{search.downcase}%",
+                                                                id:     search_id.to_s)
     end
   end
 
-  def self.ransackable_associations(auth_object = nil)
+  def self.ransackable_associations(_auth_object = nil)
     ["raised_type", "water"]
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "fish_cost", "fish_name", "id", "id_value", "size", "stock", "updated_at", "water_id", "raised_type_id"]
+  def self.ransackable_attributes(_auth_object = nil)
+    ["created_at", "fish_cost", "fish_name", "id", "id_value", "size", "stock", "updated_at",
+     "water_id", "raised_type_id"]
   end
 end

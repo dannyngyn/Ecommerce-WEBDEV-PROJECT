@@ -1,4 +1,3 @@
 class UserController < ApplicationController
-  def login
-  end
+  def login; end
 end
