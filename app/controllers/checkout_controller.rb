@@ -148,15 +148,15 @@ class CheckoutController < ApplicationController
         cart.each do |fish|
           @fish = Fish.find(fish.id)
           order.fish_orders.create(fish: @fish)
+          flash[:order] = order.id
         end
       else
-        logging.debug "Order Error"
+        puts "Order Error"
       end
     else
-      logging.debug "User Error"
+      puts "User Error"
     end
 
-    flash[:order] = order.id
     redirect_to @session.url, allow_other_host: true
   end
 
