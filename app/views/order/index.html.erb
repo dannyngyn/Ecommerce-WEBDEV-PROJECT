@@ -6,6 +6,9 @@
       <th>Ordered Fish</th>
       <th>Total Cost</th>
       <th>Payment Status</th>
+      <th>GST</th>
+      <th>PST</th>
+      <th>HST</th>
     </tr>
   </thead>
     <tbody>
@@ -18,6 +21,9 @@
               ||&nbsp;&nbsp;&nbsp;<%=f.fish['fish_name']%>&nbsp;&nbsp;&nbsp;||
             <% end %>
           </td>
+          <td><%= o['gst'] %></td>
+          <td><%= o['pst'] %></td>
+          <td><%= o['hst'] %></td>
           <td><%= o['total_cost'] %></td>
           <td><%= o['payment_status'] %></td>
         </tr>
