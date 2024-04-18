@@ -3,7 +3,11 @@ class UserLogin < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   belongs_to :user, optional: true
+
+  validates :email, presence: true
+  validates :encrypted_password, presence: true
 
   def self.ransackable_associations(auth_object = nil)
     ["users"]

@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :fish_orders
+  validates :total_cost, presence: true, numericality: {greater_than_or_equal_to: 0}
 
   def self.ransackable_associations(auth_object = nil)
     ["fish_orders", "user"]
