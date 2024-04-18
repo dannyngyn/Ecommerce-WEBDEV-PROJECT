@@ -1,5 +1,6 @@
 <p>SUCCESS</p>
 <%= @fishes %>
 <%= params[:province] %>
+<%= @session%>
 <%= @session["customer_details"]["name"]%>
 <%= number_with_precision(@session["amount_total"] / 100.0, precision: 2)%>

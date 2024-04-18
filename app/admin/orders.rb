@@ -5,7 +5,16 @@ ActiveAdmin.register Order do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :total_cost, :user_id, :payment_status
+  permit_params :total_cost, :user_id, :payment_status, :payment_id
+
+  form do |f|
+    f.inputs do
+      f.input :user, as: :select, collection: User.pluck(:first_name, :id)
+      f.input :total_cost
+      f.input :payment_status, as: :select, collection: [["New", "New"], ["Cancelled", "Cancelled"], ["Paid", "Paid"], ["Shipped", "Shipped"]]
+    end
+    f.actions
+  end
   #
   # or
   #

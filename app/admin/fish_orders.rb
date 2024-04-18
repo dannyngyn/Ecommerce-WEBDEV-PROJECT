@@ -5,7 +5,7 @@ ActiveAdmin.register FishOrder do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :fish_id, :order_id
+   permit_params :fish_id, :order_id
   #
   # or
   #
@@ -14,5 +14,5 @@ ActiveAdmin.register FishOrder do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+
 end

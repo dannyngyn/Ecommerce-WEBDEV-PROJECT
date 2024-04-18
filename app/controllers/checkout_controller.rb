@@ -118,7 +118,7 @@ class CheckoutController < ApplicationController
     if(user && user.valid?)
       order = user.orders.create(user_id: user.id,
                                  total_cost: grand_total.to_i,
-                                 payment_status: ["new"])
+                                 payment_status: "New")
       if(order && order.valid?)
         cart.each do |fish|
           @fish = Fish.find(fish.id)
@@ -142,7 +142,8 @@ class CheckoutController < ApplicationController
 
     if flash[:order]
       order = Order.find(flash[:order])
-      order.update(payment_status: @session['payment_status'])
+      order.update(payment_status: 'Paid')
+      order.update(payment_id: @session["id"])
     end
 
     session[:shopping_cart] = []
@@ -152,7 +153,7 @@ class CheckoutController < ApplicationController
   def cancel
     if flash[:order]
       order = Order.find(flash[:order])
-      order.update(payment_status: 'cancelled')
+      order.update(payment_status: 'Cancelled')
     end
 
     session[:shopping_cart] = []
