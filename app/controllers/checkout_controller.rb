@@ -143,6 +143,9 @@ class CheckoutController < ApplicationController
       puts grand_total
       order = user.orders.create(user_id:        user.id,
                                  total_cost:     grand_total.to_f.round(2),
+                                 gst:     gst_calculation.to_i,
+                                 pst:     pst_calculation.to_i,
+                                 hst:     hst_calculation.to_i,
                                  payment_status: "New")
       if order&.valid?
         cart.each do |fish|
