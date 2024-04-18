@@ -26,7 +26,7 @@ class CheckoutController < ApplicationController
       return
     end
 
-    if user_login_signed_in? && current_user_login.user_id
+    if user_login_signed_in? && !current_user_login.user_id.nil?
       user = User.find(current_user_login.user_id)
       province = Province.find_by(id: user.province_id)
     end
@@ -171,6 +171,8 @@ class CheckoutController < ApplicationController
       order = Order.find(flash[:order])
       order.update(payment_status: "Paid")
       order.update(payment_id: @session["id"])
+    else
+      puts "Error With Order"
     end
 
     session[:shopping_cart] = []
@@ -180,6 +182,8 @@ class CheckoutController < ApplicationController
     if flash[:order]
       order = Order.find(flash[:order])
       order.update(payment_status: "Cancelled")
+    else
+      puts "Error With Order"
     end
 
     session[:shopping_cart] = []
