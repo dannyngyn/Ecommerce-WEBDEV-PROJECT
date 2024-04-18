@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'order/index'
   devise_for :user_login, controllers: {
     sessions: 'user_login/sessions'
   }
