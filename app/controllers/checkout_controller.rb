@@ -2,12 +2,23 @@ class CheckoutController < ApplicationController
   def create
     redirect_to root_path and return if cart.nil?
 
+    if (params[:first_name].blank? ||
+       params[:last_name].blank? ||
+       params[:address].blank? ||
+       params[:email].blank? ||
+       params[:province].blank?) && !user_login_signed_in?
+
+      flash[:null_notice] = "PLEASE ENTER DATA IN ALL FIELDS"
+      redirect_to checkout_show_path
+      return
+    end
+
     if Province.find_by(name: params[:province]).nil? && !user_login_signed_in?
-      flash[:province_notice] = "#{params[:province]} does not exist"
+      flash[:province_notice] = "#{params[:province]} DOES NOT EXIST"
     end
 
     if UserLogin.find_by(email: params[:email]) && !user_login_signed_in?
-      flash[:email_notice] = "Please login with the registered email, #{params[:email]}"
+      flash[:email_notice] = "PLEASE LOGIN W/ THE REGISTERED EMAIL: #{params[:email]}"
     end
 
     if flash[:email_notice] || flash[:province_notice]
@@ -31,7 +42,7 @@ class CheckoutController < ApplicationController
     end
 
     if user_login_signed_in? && current_user_login.user_id.nil?
-      current_user.update(user_id: user.id)
+      current_user_login.update(user_id: user.id)
     end
 
     total_fish_cost = cart.sum(&:fish_cost)
@@ -54,8 +65,11 @@ class CheckoutController < ApplicationController
                         0
                       end
 
-    grand_total = total_fish_cost + hst_calculation / 100 + gst_calculation / 100 + pst_calculation
-    grand_total /= 100
+    grand_total = total_fish_cost + hst_calculation / 100 + gst_calculation / 100 + pst_calculation / 100
+    puts hst_calculation
+    puts gst_calculation
+    puts pst_calculation
+    puts total_fish_cost
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: ["card"],
@@ -74,7 +88,7 @@ class CheckoutController < ApplicationController
           }
         }
       end +
-      (if province.positive && province.gst
+      (if province.gst.positive? && province.gst
          [
            quantity:   1,
            price_data: {
@@ -89,7 +103,7 @@ class CheckoutController < ApplicationController
        else
          []
        end) +
-      (if province.pst.positive && province.pst
+      (if province.pst.positive? && province.pst
          [
            quantity:   1,
            price_data: {
@@ -126,8 +140,9 @@ class CheckoutController < ApplicationController
     # end
 
     if user&.valid?
+      puts grand_total
       order = user.orders.create(user_id:        user.id,
-                                 total_cost:     grand_total.to_i,
+                                 total_cost:     grand_total.to_f.round(2),
                                  payment_status: "New")
       if order&.valid?
         cart.each do |fish|

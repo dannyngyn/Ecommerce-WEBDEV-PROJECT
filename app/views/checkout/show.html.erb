@@ -1,5 +1,9 @@
 <% if !user_login_signed_in? || current_user_login.user_id.nil? %>
   <% if cart.present? %>
+    <% if flash[:null_notice] %>
+      <p>ERROR: <%= flash[:null_notice] %></p>
+    <% end %>
+
     <% if flash[:province_notice] %>
       <p>ERROR: <%= flash[:province_notice] %></p>
     <% end %>
@@ -40,7 +44,7 @@
   <% end %>
 <% else %>
   <div id = "fish_buy_form">
-    <%= form_with url: checkout_create_path, remote: true, data: { turbo: false } do |form|%>
+    <%= form_with url: checkout_create_path, remote: true, data: { turbo: false } do |form| %>
       <p>We already found a user registered to this account. Please Proceed!</p>
       <%= button_tag "Check Out Now"%>
     <% end %>
