@@ -12,13 +12,48 @@
   </head>
   <body>
     <header>
-      <%= render partial: 'cart'%>
+      <details>
+        <summary>
+          <%= link_to image_tag("clown-fish.png", width:50), cart_shop_path  %>
+          <% if cart.present? %>
+            <sup><%= cart.size %></sup>
+          <% end %>
+        </summary>
+          <% if cart.present? %>
+            <% cart.each do |fish| %>
+              <li>
+                <%= fish.fish_name %><%= button_to 'X', cart_path(fish), method: :delete %>
+              </li>
+            <% end %>
+          <% else %>
+            <p>
+              No items in your cart.
+            </p>
+          <% end %>
+        <% if flash[:notice] %>
+          <p>
+            <%= flash[:notice]%>
+          </p>
+        <% end %>
+      </details>
 
-      <%= render partial: 'login'%>
+      <% if user_login_signed_in? %>
+        <%= button_to "Log off", destroy_user_login_session_path, method: :delete, data: { turbo_method: :delete } %>
+      <% else %>
+        <%= button_to "Login", new_user_login_session_path %>
+      <% end %>
 
       <h1><a href = "/">Winnipeg Fish & Fins</a></h1>
 
-      <%= render partial: 'nav_header'%>
+      <ul id ="menu">
+        <li><a href = "/">Home</a></li>
+        <li><a href = "/fish/about">About</a></li>
+        <li><a href = "/fish/index">Fish</a></li>
+        <% if user_login_signed_in? %>
+          <li><a href = "/order/index">Orders</a></li>
+        <% end %>
+        <li><a href = "/admin/login">Admin Access</a></li>
+      </ul>
     </header>
     <%= yield %>
   </body>

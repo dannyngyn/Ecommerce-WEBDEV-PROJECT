@@ -1,5 +1,0 @@
-<% if user_login_signed_in? %>
-  <%= button_to "Log off", destroy_user_login_session_path, method: :delete, data: { turbo_method: :delete } %>
-<% else %>
-  <%= button_to "Login", new_user_login_session_path %>
-<% end %>
