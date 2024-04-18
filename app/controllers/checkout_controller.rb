@@ -146,6 +146,7 @@ class CheckoutController < ApplicationController
                                  gst:     (gst_calculation/100).to_f.round(2),
                                  pst:     (pst_calculation/100).to_f.round(2),
                                  hst:     (hst_calculation/100).to_f.round(2),
+                                 sub_total:     (total_fish_cost/100).to_f.round(2),
                                  payment_status: "New")
       if order&.valid?
         cart.each do |fish|
