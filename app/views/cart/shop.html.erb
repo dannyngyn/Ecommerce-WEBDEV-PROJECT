@@ -5,7 +5,7 @@
       <p>Size: <%= fish.size %></p>
       <%if fish.image.present? %>
         <div id = "fish_image">
-          <%= image_tag(fish.image, width:100) %>
+          <%= image_tag(fish.image, width:100, alt: "fish_image_in_cart") %>
         </div>
       <% end %>
       <%= button_to 'REMOVE', cart_path(fish), method: :delete %>
